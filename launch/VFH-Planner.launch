@@ -1,0 +1,31 @@
+<!-- ego_planner 仿真 -->
+<launch>
+    <!-- 启动全局规划算法 -->
+    <node pkg="vfh_planner" name="local_planner_main" type="local_planner_main" output="screen">
+        <!-- 参数 -->
+        <param name="uav_id" value="1"/>
+        <!-- 地图输入模式 0代表全局点云，1代表局部点云，2代表激光雷达scan数据 -->
+        <param name="local_planner/map_input_source" value="0"/>
+        <param name="local_planner/local_pcl_topic_name" value="/prometheus/sensors/3Dlidar_scan"/>
+        <!-- 最大速度 -->
+        <param name="local_planner/max_planning_vel" value="0.5"/>
+
+        <!-- VFH参数 -->
+        <!-- 膨胀参数，一般设置为无人机的半径或更大 -->
+        <param name="vfh/inflate_distance" value="1.0" type="double"/>
+        <!-- 感知距离，只考虑感知距离内的障碍物 -->
+        <param name="vfh/sensor_max_range" value="6.0" type="double"/>
+        <!-- weight -->
+        <param name="vfh/obstacle_weight" value="10.0" type="double"/>
+        <param name="vfh/goalWeight" value="0.1" type="double"/>
+        <param name="vfh/safe_distance" value="0.01" type="double"/>
+        <!-- 直方图个数 -->
+        <param name="vfh/h_res" value="360" type="int"/>
+    </node>
+
+    <!-- 启动规划mission， 激光输入control_yaw_flag设为false，rgbd输入control_yaw_flag设为true -->
+    <node pkg="prometheus_mission" type="planning_mission" name="planning_mission" output="screen" launch-prefix="gnome-terminal --">
+        <param name="planning_mission/control_yaw_flag" value="false" type="bool"/>
+        <param name="planning_mission/sim_mode" value="true" type="bool"/>
+    </node>
+</launch>
