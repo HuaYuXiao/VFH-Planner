@@ -13,17 +13,12 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
-#include "tools.h"
 #include "local_planning_alg.h"
 
 using namespace std;
 
-namespace Local_Planning
-{
-extern ros::Publisher message_pub;
-
-class VFH: public local_planning_alg
-{
+namespace Local_Planning{
+class VFH: public local_planning_alg{
 private:
     //　参数
     double inflate_distance;

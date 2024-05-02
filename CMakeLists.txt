@@ -42,7 +42,6 @@ link_directories(${PCL_LIBRARY_DIRS})
 add_executable(local_planner_main 
 	src/planner_node.cpp
 	src/local_planning.cpp
-       src/tools.cpp
        src/vfh.cpp
 	)
 

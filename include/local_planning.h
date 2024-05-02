@@ -19,18 +19,15 @@
 #include "prometheus_msgs/DroneState.h"
 #include "prometheus_msgs/ControlCommand.h"
 #include "vfh.h"
-#include "tools.h"
 #include "message_utils.h"
 
 using namespace std;
 #define NODE_NAME "Local_Planner [main]"
 
-#define MIN_DIS 0.1
+#define MIN_DIS 0.2
 
 namespace Local_Planning
 {
-extern ros::Publisher message_pub;
-
 class Local_Planner
 {
 private:
@@ -70,6 +67,7 @@ private:
 
     // 规划初始状态及终端状态
     Eigen::Vector3d start_pos, start_vel, start_acc, goal_pos, goal_vel;
+    float goal_yaw;
 
     int planner_state;
     Eigen::Vector3d desired_vel;
@@ -85,7 +83,6 @@ private:
     {
         WAIT_GOAL,
         PLANNING,
-        TRACKING,
     };
     EXEC_STATE exec_state;
 
